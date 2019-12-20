@@ -4,8 +4,9 @@ const (
 	ILLEGAL = "ILLEGAL"
 	EOF     = "EOF"
 	// Identifiers + literals
-	IDENT = "IDENT" //add, foobar, x, y, ...
-	INT   = "INT"   // 1343456
+	IDENT  = "IDENT" //add, foobar, x, y, ...
+	INT    = "INT"   // 1343456
+	STRING = "STRING"
 	// Operator
 	ASSIGN   = "="
 	PLUS     = "+"
@@ -19,11 +20,14 @@ const (
 	//Delimiter
 	COMMA     = ","
 	SEMICOLON = ";"
+	COLON     = ":"
 
-	LPAREN = "("
-	RPAREN = ")"
-	LBRACE = "{"
-	RBRACE = "}"
+	LPAREN   = "("
+	RPAREN   = ")"
+	LBRACKET = "["
+	RBRACKET = "]"
+	LBRACE   = "{"
+	RBRACE   = "}"
 
 	EQ     = "=="
 	NOT_EQ = "!="

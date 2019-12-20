@@ -11,6 +11,27 @@ import (
 )
 
 const PROMPT = ">> "
+const BackSpace = rune('\b')
+
+func handleBackSpace(s string) string {
+	runeS := []rune(s)
+	res := runeS[:0]
+	i := 0
+	for _, ch := range runeS {
+		if ch == BackSpace && i == 0 {
+			continue
+		}
+
+		if ch == BackSpace {
+			i--
+			res = res[:i]
+		} else {
+			res = append(res, ch)
+			i++
+		}
+	}
+	return string(res)
+}
 
 func Start(in io.Reader, out io.Writer) {
 	scanner := bufio.NewScanner(in)
@@ -24,6 +45,7 @@ func Start(in io.Reader, out io.Writer) {
 		}
 
 		line := scanner.Text()
+		line = handleBackSpace(line)
 
 		if line == "quit" {
 			return
@@ -38,11 +60,11 @@ func Start(in io.Reader, out io.Writer) {
 			continue
 		}
 
-		io.WriteString(out, "parse: "+program.String())
-		io.WriteString(out, "\n")
-
 		evaluated := evaluator.Eval(program, env)
 		if evaluated != nil {
+			if evaluated.Type() == object.NULL_OBJ {
+				continue
+			}
 			io.WriteString(out, evaluated.Inspect())
 			io.WriteString(out, "\n")
 		}
